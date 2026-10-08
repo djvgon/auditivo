@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "nota": "Conexiones de tipo «ejemplo»: un fragmento del banco de armonía (por su identificador, p. ej. A-6-04) y un pasaje de música real con la misma fórmula. Las escribe solo el chat del banco auditivo, después de que Diego apruebe cada una. Los ejercicios no van aquí: su conexión viaja en musica-real/<ID>/usos.json. Acuerdo: claude/Banco-armonico-y-auditivo-conexion.md, apartado 4.",
+  "conexiones": []
+}

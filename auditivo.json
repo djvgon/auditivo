@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "nota": "Lo genera tools/publicar_web.mjs desde el catálogo del banco auditivo; no se edita a mano. Compases de la obra; desde/hasta en compás.tiempo, intervalo medio abierto. rejilla: segundo en que empieza cada compás, incluido el siguiente al último que suena. unidades: [nombre, desde, hasta, unidad superior o null]. Las rutas son relativas a este archivo.",
+  "fragmentos": {
+    "BEE-SYM-C51": {
+      "obra": "L. van Beethoven · Sinfonía n.º 7, op. 92, II",
+      "compas": [2, 4],
+      "rejilla": [
+        [1, 0.22],
+        [2, 2.26],
+        [3, 4.3],
+        [4, 6.32],
+        [5, 8.31],
+        [6, 10.39],
+        [7, 12.26],
+        [8, 14.41],
+        [9, 16.51],
+        [10, 18.66],
+        [11, 20.78],
+        [12, 22.82],
+        [13, 24.96],
+        [14, 27.01],
+        [15, 29.14],
+        [16, 31.38],
+        [17, 33.45],
+        [18, 35.76],
+        [19, 37.99],
+        [20, 40.07],
+        [21, 42.06],
+        [22, 44.2],
+        [23, 46.44],
+        [24, 48.54],
+        [25, 50.78],
+        [26, 52.78],
+        [27, 54.36]
+      ],
+      "unidades": [
+        ["Introducción", "1.1", "3.1", null],
+        ["A", "3.1", "11.1", null],
+        ["Segunda parte", "11.1", "19.1", null],
+        ["B", "11.1", "15.1", "Segunda parte"],
+        ["A′", "15.1", "19.1", "Segunda parte"],
+        ["Repetición", "19.1", "27.1", null],
+        ["B", "19.1", "23.1", "Repetición"],
+        ["A′", "23.1", "27.1", "Repetición"]
+      ],
+      "audio": "audio/BEE-SYM-C51.mp3",
+      "partitura": "partituras/BEE-SYM-C51.png",
+      "creditoAudio": "New York Philharmonic, Leonard Bernstein (1960)",
+      "creditoPartitura": "Franz Liszt, transcripción para piano S.464/7; ed. José Vianna da Motta, Breitkopf & Härtel, 1922",
+      "difusion": "libre",
+      "original": "musica-real/BEE-SYM-C51/original.musicxml",
+      "usos": "musica-real/BEE-SYM-C51/usos.json"
+    }
+  }
+}

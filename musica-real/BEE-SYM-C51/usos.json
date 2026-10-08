@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "fragmento": "BEE-SYM-C51",
+  "obra": "L. van Beethoven: Sinfonía n.º 7, op. 92, II",
+  "original": "original.musicxml",
+  "aprobado": "2026-10-08",
+  "codigos": "Códigos de lección nuevos (A-n = lección n del libro), vigentes desde el 8/10/2026: claude/Armonia-numeracion-de-lecciones.md.",
+  "nota": "Lo convierte en ejercicios el chat de la aplicación de armonía (acuerdo, apartado 3). Compases de la obra, en compás.tiempo; intervalo medio abierto. 'marca' es el texto @ que lleva el fragmento importado; 'rotulo', lo que ve el alumno junto al ejercicio.",
+  "usos": [
+    { "tipo": "ejercicio", "leccion": "A-5", "tituloLeccion": "I, V y V7", "tema": 5,
+      "desde": "16.2", "hasta": "19.1",
+      "marca": "@L. van Beethoven: Sinfonía n.º 7, II, cc. 16-18",
+      "rotulo": "L. van Beethoven · Sinfonía n.º 7, II, cc. 16-18",
+      "estado": "aprobado" },
+    { "tipo": "ejercicio", "leccion": "A-6", "tituloLeccion": "I6, V6 y VII6", "tema": 6,
+      "desde": "15.1", "hasta": "19.1",
+      "marca": "@L. van Beethoven: Sinfonía n.º 7, II, cc. 15-18",
+      "rotulo": "L. van Beethoven · Sinfonía n.º 7, II, cc. 15-18",
+      "estado": "aprobado" },
+    { "tipo": "ejercicio", "leccion": "A-9", "tituloLeccion": "El 64 cadencial", "tema": 9,
+      "desde": "8.1", "hasta": "11.1", "tonalidad": "Do M",
+      "marca": "@L. van Beethoven: Sinfonía n.º 7, II, cc. 8-10",
+      "rotulo": "L. van Beethoven · Sinfonía n.º 7, II, cc. 8-10",
+      "estado": "aprobado",
+      "nota": "El primer acorde es I6/4, que la reducción no puede mostrar: sobre el bajo sol, la soprano también es sol, y lo que lo distingue del V son el do y el mi de las voces interiores. Diego pone el cifrado al revisarlo (criterio 4 del acuerdo; aviso del chat de armonía, 8/10/2026)." },
+    { "tipo": "analisis", "leccion": "A-17", "tituloLeccion": "Las dominantes secundarias", "tema": 17, "desde": "3.1", "hasta": "11.1",
+      "estado": "pendiente",
+      "nota": "Modulación de la menor a Do mayor con dominante secundaria (c. 7) y 6/4 cadencial (c. 8). Solo como análisis, en la lección A-17 (dominantes secundarias), que Diego decidió crear el 8/10/2026; la alternativa es A-14 (modulación al relativo). Irá como «solo reconocer» (análisis y audición, decidido por Diego el 8/10/2026) cuando la aplicación tenga el campo de modos." }
+  ],
+  "descartados": [
+    { "tipo": "ejemplo", "banco": "A-6-02", "desde": "15.1", "hasta": "19.1",
+      "motivo": "La fórmula no coincide exactamente (A-6-02, antes A3-2-02, tiene I6; Beethoven, no). Diego, 8/10/2026." }
+  ]
+}

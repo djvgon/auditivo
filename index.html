@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Educación auditiva</title>
+<meta name="description" content="Fragmentos de música real con su audio, su partitura y sus unidades formales.">
+<style>
+  :root {
+    --fondo: #f6f8fb; --papel: #ffffff; --tinta: #17202b; --suave: #5b6675;
+    --linea: #dde3ea; --azul: #005bff; --azul-claro: #e8efff; --barra: #17202b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --fondo: #10151c; --papel: #18202a; --tinta: #e8edf3; --suave: #9aa6b4;
+      --linea: #2a3542; --azul: #5c95ff; --azul-claro: #1c2a45; --barra: #0b0f14;
+    }
+  }
+  :root[data-theme="dark"] {
+    --fondo: #10151c; --papel: #18202a; --tinta: #e8edf3; --suave: #9aa6b4;
+    --linea: #2a3542; --azul: #5c95ff; --azul-claro: #1c2a45; --barra: #0b0f14;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fondo); color: var(--tinta);
+         font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  header { background: var(--barra); color: #fff; padding: 14px 16px; }
+  header .marco, main { max-width: 1000px; margin: 0 auto; }
+  header h1 { margin: 0; font-size: 18px; font-weight: 600; }
+  header p { margin: 2px 0 0; font-size: 14px; color: #b9c3cf; }
+  main { padding: 24px 16px 48px; }
+  .aviso { color: var(--suave); margin: 0 0 24px; }
+  article { background: var(--papel); border: 1px solid var(--linea); border-radius: 12px;
+            padding: 20px; margin-bottom: 24px; }
+  article h2 { margin: 0 0 4px; font-size: 20px; font-weight: 600; }
+  .creditos { margin: 0 0 16px; font-size: 14px; color: var(--suave); }
+  .partitura { display: block; width: 100%; height: auto; border: 1px solid var(--linea);
+               border-radius: 8px; background: #fff; }
+  audio { width: 100%; margin: 16px 0 8px; }
+  .sonando { min-height: 1.5em; font-size: 14px; color: var(--azul); margin: 0 0 12px; }
+  h3 { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--suave);
+       margin: 20px 0 8px; font-weight: 600; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  ul ul { padding-left: 24px; }
+  li { margin: 6px 0; }
+  button { font: inherit; font-size: 15px; color: var(--azul); background: var(--azul-claro);
+           border: 1px solid transparent; border-radius: 8px; padding: 6px 12px; cursor: pointer;
+           text-align: left; }
+  button:hover { border-color: var(--azul); }
+  button:focus-visible { outline: 2px solid var(--azul); outline-offset: 2px; }
+  button[aria-pressed="true"] { background: var(--azul); color: #fff; }
+  .detalle { color: var(--suave); font-size: 14px; margin-left: 6px; }
+  .parar { color: var(--tinta); background: transparent; border-color: var(--linea); }
+  .error { color: #b3261e; }
+</style>
+</head>
+<body>
+<header>
+  <div class="marco">
+    <h1>Educación auditiva</h1>
+    <p>Fragmentos de música real: audio, partitura y unidades formales</p>
+  </div>
+</header>
+<main>
+  <p class="aviso">Página provisional. Aquí se publican los datos que usa la aplicación de
+  armonización; la aplicación de Educación auditiva vendrá después. Cada botón hace sonar
+  solo los compases que indica.</p>
+  <div id="fragmentos"><p>Cargando…</p></div>
+</main>
+<script>
+"use strict";
+
+// «16.2» → segundo del audio, con la rejilla del fragmento (compás → segundo en que empieza).
+function segundo(frag, posicion) {
+  const [compas, tiempo = 1] = posicion.split(".").map(Number);
+  const inicio = frag.rejilla.find(([c]) => c === compas);
+  const siguiente = frag.rejilla.find(([c]) => c === compas + 1);
+  if (!inicio) throw new Error(`El c. ${compas} no está en la rejilla.`);
+  if (tiempo === 1 || !siguiente) return inicio[1];
+  return inicio[1] + (tiempo - 1) / frag.compas[0] * (siguiente[1] - inicio[1]);
+}
+
+// «16.2»–«19.1» → «cc. 16-18»
+function compases(desde, hasta) {
+  const a = parseInt(desde, 10);
+  const [hc, ht = 1] = hasta.split(".").map(Number);
+  const b = ht === 1 ? hc - 1 : hc;
+  return a === b ? `c. ${a}` : `cc. ${a}-${b}`;
+}
+
+function elemento(etiqueta, propiedades = {}, ...hijos) {
+  const e = Object.assign(document.createElement(etiqueta), propiedades);
+  e.append(...hijos);
+  return e;
+}
+
+function montar(id, frag, usos) {
+  const audio = elemento("audio", { controls: true, preload: "metadata", src: frag.audio });
+  const sonando = elemento("p", { className: "sonando" });
+  sonando.setAttribute("aria-live", "polite");
+  let fin = null, pulsado = null;
+
+  function vigilar() {
+    if (fin !== null && audio.currentTime >= fin) { audio.pause(); return; }
+    if (!audio.paused) requestAnimationFrame(vigilar);
+  }
+  audio.addEventListener("play", () => requestAnimationFrame(vigilar));
+  audio.addEventListener("pause", () => {
+    // El aviso de pausa llega con retraso: si entretanto ha empezado otro pasaje, no se toca.
+    if (!audio.paused) return;
+    sonando.textContent = "";
+    if (pulsado) pulsado.setAttribute("aria-pressed", "false");
+    pulsado = null; fin = null;
+  });
+
+  function boton(texto, detalle, desde, hasta) {
+    const b = elemento("button", { type: "button" }, texto);
+    b.setAttribute("aria-pressed", "false");
+    b.addEventListener("click", () => {
+      audio.pause();
+      if (pulsado) pulsado.setAttribute("aria-pressed", "false");
+      audio.currentTime = segundo(frag, desde);
+      fin = segundo(frag, hasta);
+      pulsado = b; b.setAttribute("aria-pressed", "true");
+      audio.play().then(() => { sonando.textContent = `Sonando: ${texto}, ${detalle}`; });
+    });
+    return elemento("li", {}, b, elemento("span", { className: "detalle" }, detalle));
+  }
+
+  const primero = `${frag.rejilla[0][0]}.1`;
+  const ultimo = `${frag.rejilla[frag.rejilla.length - 1][0]}.1`;
+
+  // Unidades formales, anidadas según su unidad superior.
+  const lista = elemento("ul", {}, boton("El fragmento completo", compases(primero, ultimo), primero, ultimo));
+  const subordinadas = new Map();
+  for (const [nombre, desde, hasta, padre] of frag.unidades) {
+    const li = boton(nombre, compases(desde, hasta), desde, hasta);
+    if (padre === null) { lista.append(li); subordinadas.set(nombre, li); }
+    else {
+      const contenedor = subordinadas.get(padre);
+      let ul = contenedor.querySelector(":scope > ul");
+      if (!ul) { ul = elemento("ul"); contenedor.append(ul); }
+      ul.append(li);
+    }
+  }
+
+  const tarjeta = elemento("article", {},
+    elemento("h2", {}, frag.obra),
+    elemento("p", { className: "creditos" },
+      `Grabación: ${frag.creditoAudio}. Partitura: ${frag.creditoPartitura}.`),
+    elemento("img", { className: "partitura", src: frag.partitura, loading: "lazy",
+                      alt: `Partitura de ${frag.obra}, ${compases(primero, ultimo)}` }),
+    audio, sonando,
+    elemento("h3", {}, "Unidades formales"), lista);
+
+  // Los pasajes que usa la aplicación de armonización.
+  if (usos && usos.usos && usos.usos.length) {
+    const ul = elemento("ul");
+    for (const u of usos.usos) {
+      const titulo = `${u.leccion} · ${u.tituloLeccion}`;
+      const estado = u.tipo === "ejercicio" ? "ejercicio" : "análisis";
+      ul.append(boton(titulo, `${compases(u.desde, u.hasta)} · ${estado} · ${u.estado}`, u.desde, u.hasta));
+    }
+    tarjeta.append(elemento("h3", {}, "En la aplicación de armonización"), ul);
+  }
+
+  tarjeta.append(elemento("p", {}, elemento("button", { type: "button", className: "parar",
+    onclick: () => audio.pause() }, "Parar")));
+  return tarjeta;
+}
+
+(async () => {
+  const contenedor = document.getElementById("fragmentos");
+  try {
+    const datos = await (await fetch("auditivo.json", { cache: "no-cache" })).json();
+    const tarjetas = [];
+    for (const [id, frag] of Object.entries(datos.fragmentos)) {
+      let usos = null;
+      if (frag.usos) { try { usos = await (await fetch(frag.usos, { cache: "no-cache" })).json(); } catch {} }
+      tarjetas.push(montar(id, frag, usos));
+    }
+    contenedor.replaceChildren(...tarjetas);
+  } catch (e) {
+    contenedor.replaceChildren(elemento("p", { className: "error" }, `No se han podido leer los datos: ${e.message}`));
+  }
+})();
+</script>
+</body>
+</html>
