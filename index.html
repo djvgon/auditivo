@@ -104,6 +104,11 @@ function montar(id, frag, usos) {
     if (!audio.paused) requestAnimationFrame(vigilar);
   }
   audio.addEventListener("play", () => requestAnimationFrame(vigilar));
+  // Con la pestaña en segundo plano el navegador frena requestAnimationFrame; «timeupdate»
+  // sigue llegando (unas cuatro veces por segundo) y para el audio igualmente.
+  audio.addEventListener("timeupdate", () => {
+    if (fin !== null && !audio.paused && audio.currentTime >= fin) audio.pause();
+  });
   audio.addEventListener("pause", () => {
     // El aviso de pausa llega con retraso: si entretanto ha empezado otro pasaje, no se toca.
     if (!audio.paused) return;
