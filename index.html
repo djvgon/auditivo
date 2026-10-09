@@ -35,6 +35,13 @@
   .creditos { margin: 0 0 16px; font-size: 14px; color: var(--suave); }
   .partitura { display: block; width: 100%; height: auto; border: 1px solid var(--linea);
                border-radius: 8px; background: #fff; }
+  .marco-partitura { position: relative; }
+  /* Lo que está sonando: el compás, sombreado, y una línea que avanza dentro de él. */
+  .compas-actual { position: absolute; display: none; pointer-events: none;
+                   background: rgba(0, 91, 255, .10); border: 1px solid rgba(0, 91, 255, .35);
+                   border-radius: 3px; }
+  .cursor { position: absolute; display: none; pointer-events: none; width: 3px;
+            margin-left: -1px; background: #005bff; border-radius: 2px; }
   audio { width: 100%; margin: 16px 0 8px; }
   .sonando { min-height: 1.5em; font-size: 14px; color: var(--azul); margin: 0 0 12px; }
   h3 { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--suave);
@@ -99,8 +106,28 @@ function montar(id, frag, usos) {
   sonando.setAttribute("aria-live", "polite");
   let fin = null, pulsado = null;
 
+  // Dónde está sonando, sobre la partitura (si se han medido los compases en la imagen):
+  // el compás de la rejilla que contiene el segundo actual, y dentro de él, la parte recorrida.
+  const img = elemento("img", { className: "partitura", src: frag.partitura, loading: "lazy" });
+  const sombra = elemento("div", { className: "compas-actual" });
+  const cursor = elemento("div", { className: "cursor" });
+  const marco = elemento("div", { className: "marco-partitura" }, img, sombra, cursor);
+  const medidas = frag.compasesEnLaImagen;
+  const rectangulos = new Map((medidas ? medidas.compases : []).map(([c, ...r]) => [c, r]));
+  function situar() {
+    const t = audio.currentTime, r = frag.rejilla;
+    const i = r.findIndex(([, s], k) => k + 1 < r.length && s <= t && t < r[k + 1][1]);
+    const rect = i >= 0 && !audio.paused ? rectangulos.get(r[i][0]) : null;
+    if (!rect || !img.clientWidth) { sombra.style.display = cursor.style.display = "none"; return; }
+    const [x0, x1, y0, y1] = rect, k = img.clientWidth / medidas.ancho;
+    const parte = (t - r[i][1]) / (r[i + 1][1] - r[i][1]);
+    Object.assign(sombra.style, { display: "block", left: `${x0 * k}px`, width: `${(x1 - x0) * k}px`, top: `${y0 * k}px`, height: `${(y1 - y0) * k}px` });
+    Object.assign(cursor.style, { display: "block", left: `${(x0 + parte * (x1 - x0)) * k}px`, top: `${y0 * k}px`, height: `${(y1 - y0) * k}px` });
+  }
+
   function vigilar() {
     if (fin !== null && audio.currentTime >= fin) { audio.pause(); return; }
+    situar();
     if (!audio.paused) requestAnimationFrame(vigilar);
   }
   audio.addEventListener("play", () => requestAnimationFrame(vigilar));
@@ -108,10 +135,12 @@ function montar(id, frag, usos) {
   // sigue llegando (unas cuatro veces por segundo) y para el audio igualmente.
   audio.addEventListener("timeupdate", () => {
     if (fin !== null && !audio.paused && audio.currentTime >= fin) audio.pause();
+    else situar();
   });
   audio.addEventListener("pause", () => {
     // El aviso de pausa llega con retraso: si entretanto ha empezado otro pasaje, no se toca.
     if (!audio.paused) return;
+    situar();
     sonando.textContent = "";
     if (pulsado) pulsado.setAttribute("aria-pressed", "false");
     pulsado = null; fin = null;
@@ -133,6 +162,7 @@ function montar(id, frag, usos) {
 
   const primero = `${frag.rejilla[0][0]}.1`;
   const ultimo = `${frag.rejilla[frag.rejilla.length - 1][0]}.1`;
+  img.alt = `Partitura de ${frag.obra}, ${compases(primero, ultimo)}`;
 
   // Unidades formales, anidadas según su unidad superior.
   const lista = elemento("ul", {}, boton("El fragmento completo", compases(primero, ultimo), primero, ultimo));
@@ -152,8 +182,7 @@ function montar(id, frag, usos) {
     elemento("h2", {}, frag.obra),
     elemento("p", { className: "creditos" },
       `Grabación: ${frag.creditoAudio}. Partitura: ${frag.creditoPartitura}.`),
-    elemento("img", { className: "partitura", src: frag.partitura, loading: "lazy",
-                      alt: `Partitura de ${frag.obra}, ${compases(primero, ultimo)}` }),
+    marco,
     audio, sonando,
     elemento("h3", {}, "Unidades formales"), lista);
 

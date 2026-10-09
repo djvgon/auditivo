@@ -6,6 +6,7 @@
   "aprobado": "2026-10-08",
   "codigos": "Códigos de lección nuevos (A-n = lección n del libro), vigentes desde el 8/10/2026: claude/Armonia-numeracion-de-lecciones.md.",
   "nota": "Lo convierte en ejercicios el chat de la aplicación de armonía (acuerdo, apartado 3). Compases de la obra, en compás.tiempo; intervalo medio abierto. 'marca' es el texto @ que lleva el fragmento importado; 'rotulo', lo que ve el alumno junto al ejercicio.",
+  "repeticiones": [ { "compases": [19, 26], "repiten": [11, 18] } ],
   "usos": [
     { "tipo": "ejercicio", "leccion": "A-5", "tituloLeccion": "I, V y V7", "tema": 5,
       "desde": "16.2", "hasta": "19.1",

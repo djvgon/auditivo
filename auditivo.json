@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "nota": "Lo genera tools/publicar_web.mjs desde el catálogo del banco auditivo; no se edita a mano. Compases de la obra; desde/hasta en compás.tiempo, intervalo medio abierto. rejilla: segundo en que empieza cada compás, incluido el siguiente al último que suena. unidades: [nombre, desde, hasta, unidad superior o null]. Las rutas son relativas a este archivo.",
+  "nota": "Lo genera tools/publicar_web.mjs desde el catálogo del banco auditivo; no se edita a mano. Compases de la obra; desde/hasta en compás.tiempo, intervalo medio abierto. rejilla: segundo en que empieza cada compás, incluido el siguiente al último que suena. unidades: [nombre, desde, hasta, unidad superior o null]. compasesEnLaImagen (opcional): el tamaño de la imagen de la partitura y, por compás, [número, x0, x1, y0, y1] en píxeles; x0 del primer compás de cada sistema es donde empieza la música, y y0–y1 el alto del sistema con las notas que salen de los pentagramas. Las rutas son relativas a este archivo.",
   "fragmentos": {
     "BEE-SYM-C51": {
       "obra": "L. van Beethoven · Sinfonía n.º 7, op. 92, II",
@@ -49,6 +49,38 @@
       "creditoAudio": "New York Philharmonic, Leonard Bernstein (1960)",
       "creditoPartitura": "Franz Liszt, transcripción para piano S.464/7; ed. José Vianna da Motta, Breitkopf & Härtel, 1922",
       "difusion": "libre",
+      "compasesEnLaImagen": {
+        "ancho": 1615,
+        "alto": 1269,
+        "compases": [
+          [1, 195, 274, 70, 431],
+          [2, 274, 390, 70, 431],
+          [3, 390, 552, 70, 431],
+          [4, 552, 693, 70, 431],
+          [5, 693, 850, 70, 431],
+          [6, 850, 984, 70, 431],
+          [7, 984, 1144, 70, 431],
+          [8, 1144, 1282, 70, 431],
+          [9, 1282, 1463, 70, 431],
+          [10, 1463, 1598, 70, 431],
+          [11, 100, 246, 494, 850],
+          [12, 246, 396, 494, 850],
+          [13, 396, 583, 494, 850],
+          [14, 583, 734, 494, 850],
+          [15, 734, 910, 494, 850],
+          [16, 910, 1068, 494, 850],
+          [17, 1068, 1267, 494, 850],
+          [18, 1267, 1412, 494, 850],
+          [19, 1412, 1597, 494, 850],
+          [20, 82, 234, 914, 1266],
+          [21, 234, 434, 914, 1266],
+          [22, 434, 592, 914, 1266],
+          [23, 592, 764, 914, 1266],
+          [24, 764, 918, 914, 1266],
+          [25, 918, 1102, 914, 1266],
+          [26, 1102, 1240, 914, 1266]
+        ]
+      },
       "original": "musica-real/BEE-SYM-C51/original.musicxml",
       "usos": "musica-real/BEE-SYM-C51/usos.json"
     }
