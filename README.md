@@ -31,7 +31,8 @@ cambio se hace en el catálogo y se vuelve a generar.
 ## Derechos
 
 Aquí solo hay material de difusión **libre**: dominio público o licencia abierta. Lo que está
-reservado al aula no se publica.
+reservado al aula no se publica. `difusion: "libre-UE"` marca las grabaciones que son de
+dominio público en España y en la Unión Europea pero no en otros países.
 
 - **Beethoven, Sinfonía n.º 7, II** (`BEE-SYM-C51`). Grabación: New York Philharmonic, Leonard
   Bernstein (Columbia Masterworks MS 6112, 1960), transferencia de LP de Internet Archive;
