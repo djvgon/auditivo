@@ -83,6 +83,60 @@
       },
       "original": "musica-real/BEE-SYM-C51/original.musicxml",
       "usos": "musica-real/BEE-SYM-C51/usos.json"
+    },
+    "BEE-SYM-C52": {
+      "obra": "L. van Beethoven · Sinfonía n.º 2, op. 36, II",
+      "compas": [3, 8],
+      "rejilla": [
+        [1, 0.3],
+        [2, 3],
+        [3, 5.68],
+        [4, 8.37],
+        [5, 11.05],
+        [6, 13.8],
+        [7, 16.65],
+        [8, 19.37],
+        [9, 22.18],
+        [10, 24.8],
+        [11, 27.4],
+        [12, 30.08],
+        [13, 32.42],
+        [14, 35.1],
+        [15, 37.75],
+        [16, 40.5],
+        [17, 43.4]
+      ],
+      "unidades": [
+        ["Frase", "1.1", "9.1", null],
+        ["Repetición", "9.1", "17.1", null]
+      ],
+      "audio": "audio/BEE-SYM-C52.mp3",
+      "partitura": "partituras/BEE-SYM-C52.png",
+      "creditoAudio": "Detroit Symphony Orchestra, Paul Paray (1959)",
+      "creditoPartitura": "Franz Liszt, transcripción para piano S.464/2; ed. José Vianna da Motta, Breitkopf & Härtel, 1922",
+      "difusion": "libre-UE",
+      "compasesEnLaImagen": {
+        "ancho": 1650,
+        "alto": 980,
+        "compases": [
+          [1, 270, 394, 42, 303],
+          [2, 394, 516, 42, 303],
+          [3, 516, 698, 42, 303],
+          [4, 698, 858, 42, 303],
+          [5, 858, 981, 42, 303],
+          [6, 981, 1100, 42, 303],
+          [7, 1100, 1248, 42, 303],
+          [8, 1248, 1438, 42, 303],
+          [9, 172, 346, 313, 593],
+          [10, 346, 528, 313, 593],
+          [11, 528, 738, 313, 593],
+          [12, 738, 911, 313, 593],
+          [13, 911, 1094, 313, 593],
+          [14, 1094, 1256, 313, 593],
+          [15, 1256, 1438, 313, 593],
+          [16, 182, 362, 614, 888]
+        ]
+      }
     }
   }
 }

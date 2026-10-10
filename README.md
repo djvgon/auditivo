@@ -39,5 +39,10 @@ dominio público en España y en la Unión Europea pero no en otros países.
   fonograma publicado antes de 1963, de dominio público en España y en la Unión Europea (no en
   los Estados Unidos). Partitura: transcripción para piano de Franz Liszt (S.464/7), edición de
   José Vianna da Motta, Breitkopf & Härtel, 1922; dominio público.
+- **Beethoven, Sinfonía n.º 2, II** (`BEE-SYM-C52`). Grabación: Detroit Symphony Orchestra, Paul
+  Paray (Mercury MG 50205, 1959), de IMSLP; fonograma publicado antes de 1963, de dominio público
+  en España y en la Unión Europea (no en los Estados Unidos). Partitura: transcripción para piano
+  de Franz Liszt (S.464/2), edición de José Vianna da Motta, Breitkopf & Härtel, 1922; dominio
+  público.
 - Las reducciones de `musica-real/` son material docente propio, elaborado a partir de esas
   partituras.
